@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:panmasterapp/common/app_theme_data.dart';
 import 'package:panmasterapp/main_controller.dart';
+import 'package:panmasterapp/screens/home/home_screen.dart';
 import 'package:panmasterapp/screens/loading/loading_screen.dart';
 
 void main() async {
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppThemeData.themeData,
       home: const LoadingScreen(),
+      getPages: <GetPage>[
+        GetPage(name: "/homeScreen", page: () => const HomeScreen()),
+      ],
     );
   }
 }
