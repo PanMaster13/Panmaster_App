@@ -39,12 +39,18 @@ dependencies:
   device_info_plus: ^9.1.0
   package_info_plus: ^4.2.0
   android_id: ^0.3.6
+  flutter_launcher_icons: ^0.10.0
   flutter_app_name: ^0.1.1
   path: ^1.7.0
   fluttertoast: ^8.0.8
 
 flutter_app_name:
   name: "PanMaster App"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/pan_app_logo.png"
 
 dev_dependencies:
   flutter_test:
