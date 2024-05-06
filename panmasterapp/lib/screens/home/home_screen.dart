@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:panmasterapp/common/app_font_style.dart';
+import 'package:panmasterapp/common/widgets/app_drawer.dart';
 import 'package:panmasterapp/screens/home/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home"),
       ),
+      drawer: const AppDrawer(),
       body: const Center(
         child: Text(
           "This is the home page",
