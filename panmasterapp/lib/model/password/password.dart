@@ -40,8 +40,8 @@ class Password {
     loginId = json["LoginId"];
     password = json["Password"];
     passwordDescription = json["PasswordDescription"];
-    createdAt = DateTime.fromMillisecondsSinceEpoch(json["CreatedAt"]);
-    updatedAt = DateTime.fromMillisecondsSinceEpoch(json["UpdatedAt"]);
+    createdAt = DateTime.fromMillisecondsSinceEpoch(json["PasswordsCreatedAt"]);
+    updatedAt = DateTime.fromMillisecondsSinceEpoch(json["PasswordsUpdatedAt"]);
   }
 
   Map<String, dynamic> toSQLiteJson() {
@@ -50,8 +50,8 @@ class Password {
     data["LoginId"] = loginId;
     data["Password"] = password;
     data["PasswordDescription"] = passwordDescription;
-    data["CreatedAt"] = createdAt?.millisecondsSinceEpoch ?? 0;
-    data["UpdatedAt"] = updatedAt?.millisecondsSinceEpoch ?? 0;
+    data["PasswordsCreatedAt"] = createdAt?.millisecondsSinceEpoch ?? 0;
+    data["PasswordsUpdatedAt"] = updatedAt?.millisecondsSinceEpoch ?? 0;
     return data;
   }
 

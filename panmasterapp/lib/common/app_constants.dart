@@ -7,6 +7,6 @@ class AppConstants {
   ///
   /// Version 1: File Settings Table Creation.
   ///
-  /// Version 2: ???
-  static int databaseVersion = 1;
+  /// Version 2: Passwords Table Creation.
+  static int databaseVersion = 2;
 }
