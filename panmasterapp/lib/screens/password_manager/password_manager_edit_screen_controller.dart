@@ -1,14 +1,19 @@
+import 'dart:developer';
+
+import 'package:encrypt/encrypt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:panmasterapp/common/app_id_generator.dart';
 import 'package:panmasterapp/common/app_sqlite_db_manager.dart';
 import 'package:panmasterapp/common/enums/form_mode.dart';
 import 'package:panmasterapp/common/widgets/app_dialog.dart';
+import 'package:panmasterapp/main_controller.dart';
 import 'package:panmasterapp/model/password/password.dart';
 import 'package:panmasterapp/screens/password_manager/password_manager_screen_controller.dart';
 
 class PasswordManagerEditScreenController extends GetxController {
   final FormMode formMode;
+  final MainController mainController = Get.find();
   final PasswordManagerScreenController passwordManagerScreenController = Get.find();
 
   Rx<String> pageTitle = "".obs;
@@ -57,6 +62,9 @@ class PasswordManagerEditScreenController extends GetxController {
 
   void onPasswordFieldSubmitted({required String value}) {
     selectedPassword.value.password = value;
+    Encrypted encrypted = mainController.encryptText(text: selectedPassword.value.password!);
+    log("encrypted: ${encrypted.base64}");
+    log("decrypted: ${mainController.decryptText(encrypted: encrypted,)}");
     focusNodeDescription.requestFocus();
   }
 
