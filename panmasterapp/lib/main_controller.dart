@@ -24,7 +24,11 @@ class MainController extends GetxController {
   }
 
   String decryptText({required Encrypted encrypted}) {
-    return cypher.decrypt(encrypted, iv: iv);
+    return cypher.decrypt(encrypted, iv: iv,);
+  }
+
+  String decryptTextV2({required String encrypted}) {
+    return cypher.decrypt64(encrypted, iv: iv,);
   }
 
 }

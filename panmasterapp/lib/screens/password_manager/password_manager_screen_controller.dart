@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:panmasterapp/common/app_id_generator.dart';
 import 'package:panmasterapp/common/app_sqlite_db_manager.dart';
 import 'package:panmasterapp/common/app_toast.dart';
 import 'package:panmasterapp/common/enums/doc_action_type.dart';
@@ -10,10 +9,12 @@ import 'package:panmasterapp/common/enums/form_mode.dart';
 import 'package:panmasterapp/common/widgets/app_dialog.dart';
 import 'package:panmasterapp/main_controller.dart';
 import 'package:panmasterapp/model/password/password.dart';
+import 'package:panmasterapp/screens/home/home_screen_controller.dart';
 import 'package:panmasterapp/screens/password_manager/password_manager_edit_screen.dart';
 
 class PasswordManagerScreenController extends GetxController {
   final MainController mainController = Get.find();
+  final HomeScreenController homeScreenController = Get.find();
   RxList<Password> passwordList = <Password>[].obs;
   RxBool isLoading = false.obs;
   Password? selectedPassword;
@@ -77,6 +78,7 @@ class PasswordManagerScreenController extends GetxController {
         if (deletePasswordSuccess) {
           textEditingControllerKeyword.text == "" ? await getPasswordList() : await getPasswordListByKeyword();
         }
+        await homeScreenController.loadPasswordList();
         Get.back();
         break;
       case DocActionType.print:

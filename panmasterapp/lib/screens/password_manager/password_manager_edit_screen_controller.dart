@@ -9,12 +9,14 @@ import 'package:panmasterapp/common/enums/form_mode.dart';
 import 'package:panmasterapp/common/widgets/app_dialog.dart';
 import 'package:panmasterapp/main_controller.dart';
 import 'package:panmasterapp/model/password/password.dart';
+import 'package:panmasterapp/screens/home/home_screen_controller.dart';
 import 'package:panmasterapp/screens/password_manager/password_manager_screen_controller.dart';
 
 class PasswordManagerEditScreenController extends GetxController {
   final FormMode formMode;
   final MainController mainController = Get.find();
   final PasswordManagerScreenController passwordManagerScreenController = Get.find();
+  final HomeScreenController homeScreenController = Get.find();
 
   Rx<String> pageTitle = "".obs;
   Rx<Password> selectedPassword = Password().obs;
@@ -41,7 +43,7 @@ class PasswordManagerEditScreenController extends GetxController {
         pageTitle.value = "EDIT PASSWORD";
 
         textEditingControllerLoginId.text = selectedPassword.value.loginId ?? "";
-        textEditingControllerPassword.text = selectedPassword.value.password ?? "";
+        textEditingControllerPassword.text = mainController.decryptTextV2(encrypted: selectedPassword.value.password ?? "",);
         textEditingControllerDescription.text = selectedPassword.value.passwordDescription ?? "";
         break;
     }
@@ -61,8 +63,9 @@ class PasswordManagerEditScreenController extends GetxController {
   }
 
   void onPasswordFieldSubmitted({required String value}) {
-    selectedPassword.value.password = value;
-    Encrypted encrypted = mainController.encryptText(text: selectedPassword.value.password!);
+    Encrypted encrypted = mainController.encryptText(text: value);
+    selectedPassword.value.password = encrypted.base64;
+
     log("encrypted: ${encrypted.base64}");
     log("decrypted: ${mainController.decryptText(encrypted: encrypted,)}");
     focusNodeDescription.requestFocus();
@@ -73,7 +76,15 @@ class PasswordManagerEditScreenController extends GetxController {
   }
 
   Future<void> onPasswordSaveButton({required BuildContext context}) async {
-    // Validation Process
+    // Set Values.
+    selectedPassword.value.loginId = textEditingControllerLoginId.text;
+
+    Encrypted encrypted = mainController.encryptText(text: textEditingControllerPassword.text);
+    selectedPassword.value.password = encrypted.base64;
+
+    selectedPassword.value.passwordDescription = textEditingControllerDescription.text;
+
+    // Validation Process.
     String errorTxt = "";
     if (selectedPassword.value.loginId == null || selectedPassword.value.loginId!.isEmpty) {
       errorTxt += "Login ID cannot be empty.\n";
@@ -104,9 +115,10 @@ class PasswordManagerEditScreenController extends GetxController {
             Get.back();
           }
 
-          Get.back();
           passwordManagerScreenController.textEditingControllerKeyword.text = "";
           await passwordManagerScreenController.getPasswordList();
+          await homeScreenController.loadPasswordList();
+          Get.back();
           break;
         case FormMode.editMode:
           AppDialog.showLoadingDialog(context: context);
@@ -117,9 +129,10 @@ class PasswordManagerEditScreenController extends GetxController {
             Get.back();
           }
 
-          Get.back();
           passwordManagerScreenController.textEditingControllerKeyword.text = "";
           await passwordManagerScreenController.getPasswordList();
+          await homeScreenController.loadPasswordList();
+          Get.back();
           break;
       }
     }
