@@ -23,6 +23,8 @@ class AppTextField extends StatelessWidget {
     this.inputFormatters,
     this.textAlign,
     this.maxLength,
+    this.readOnly = false,
+    this.onTap,
   }) : super(key: key);
 
   final String? hintText;
@@ -41,6 +43,8 @@ class AppTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextAlign? textAlign;
   final int? maxLength;
+  final bool readOnly;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +104,8 @@ class AppTextField extends StatelessWidget {
         ),
       ),
       maxLength: maxLength,
+      readOnly: readOnly,
+      onTap: onTap,
     );
   }
 

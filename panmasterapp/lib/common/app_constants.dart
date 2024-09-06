@@ -8,5 +8,21 @@ class AppConstants {
   /// Version 1: File Settings Table Creation.
   ///
   /// Version 2: Passwords Table Creation.
-  static int databaseVersion = 2;
+  static const int databaseVersion = 2;
+
+  static const int springMarchEquinoxDay = 21;
+
+  static const int springMarchEquinoxMonth = 3;
+
+  static const int summerJuneSolsticeDay = 22;
+
+  static const int summerJuneSolsticeMonth = 6;
+
+  static const int autumnSeptemberEquinoxDay = 23;
+
+  static const int autumnSeptemberEquinoxMonth = 9;
+
+  static const int winterDecemberSolsticeDay = 22;
+
+  static const int winterDecemberSolsticeMonth = 12;
 }

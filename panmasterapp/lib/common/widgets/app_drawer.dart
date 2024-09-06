@@ -5,6 +5,7 @@ import 'package:panmasterapp/common/app_font_style.dart';
 import 'package:panmasterapp/main_controller.dart';
 import 'package:panmasterapp/screens/home/home_screen.dart';
 import 'package:panmasterapp/screens/password_manager/password_manager_screen.dart';
+import 'package:panmasterapp/screens/season_checker/season_checker_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -39,6 +40,13 @@ class AppDrawer extends StatelessWidget {
                     iconColor: Colors.black,
                     title: Text("Home", style: AppFontStyle.bodyNormal16.copyWith(color: Colors.black,),),
                     onTap: () => Get.off(() => const HomeScreen()),
+                  ),
+
+                  ListTile(
+                    leading: const Icon(Icons.cloud,),
+                    iconColor: Colors.black,
+                    title: Text("Season Checker", style: AppFontStyle.bodyNormal16.copyWith(color: Colors.black,),),
+                    onTap: () => Get.to(() => const SeasonCheckScreen()),
                   ),
 
                   ListTile(
