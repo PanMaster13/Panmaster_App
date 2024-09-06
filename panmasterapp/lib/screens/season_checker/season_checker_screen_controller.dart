@@ -32,15 +32,33 @@ class SeasonCheckerScreenController extends GetxController {
 
   void calculateSeasonBySelectedDateTime() {
     if (selectedDateTime.value.month >= AppConstants.springMarchEquinoxMonth && selectedDateTime.value.month <= AppConstants.summerJuneSolsticeMonth) {
-      log("1");
-      if (selectedDateTime.value.day >= AppConstants.springMarchEquinoxDay) {
-        // After or Equal March Equinox Day: Spring.
-        calculatedSeason.value = "Spring";
-        calculatedSeason.refresh();
-      } else {
-        // Before March Equinox Day: Winter.
-        calculatedSeason.value = "Winter";
-        calculatedSeason.refresh();
+      switch (selectedDateTime.value.month) {
+        case AppConstants.springMarchEquinoxMonth:
+          if (selectedDateTime.value.day >= AppConstants.springMarchEquinoxDay) {
+            // After or Equal March Equinox Day: Spring.
+            calculatedSeason.value = "Spring";
+            calculatedSeason.refresh();
+          } else {
+            // Before March Equinox Day: Winter.
+            calculatedSeason.value = "Winter";
+            calculatedSeason.refresh();
+          }
+          break;
+        case AppConstants.summerJuneSolsticeMonth:
+          if (selectedDateTime.value.day < AppConstants.summerJuneSolsticeDay) {
+            // Before June Solstice Day: Spring.
+            calculatedSeason.value = "Spring";
+            calculatedSeason.refresh();
+          } else {
+            // After or Equal June Solstice Day: Summer.
+            calculatedSeason.value = "Summer";
+            calculatedSeason.refresh();
+          }
+          break;
+        default:
+          calculatedSeason.value = "Spring";
+          calculatedSeason.refresh();
+          break;
       }
     } else if (selectedDateTime.value.month >= AppConstants.summerJuneSolsticeMonth && selectedDateTime.value.month <= AppConstants.autumnSeptemberEquinoxMonth) {
       switch (selectedDateTime.value.month) {
@@ -61,7 +79,7 @@ class SeasonCheckerScreenController extends GetxController {
             calculatedSeason.value = "Summer";
             calculatedSeason.refresh();
           } else {
-            // After or Equal September Equinox Day: Spring.
+            // After or Equal September Equinox Day: Autumn.
             calculatedSeason.value = "Autumn";
             calculatedSeason.refresh();
           }
@@ -72,27 +90,67 @@ class SeasonCheckerScreenController extends GetxController {
           break;
       }
     } else if (selectedDateTime.value.month >= AppConstants.autumnSeptemberEquinoxMonth && selectedDateTime.value.month <= AppConstants.winterDecemberSolsticeMonth) {
-      log("3");
-      if (selectedDateTime.value.day >= AppConstants.autumnSeptemberEquinoxDay) {
-        // After or Equal September Equinox Day: Autumn.
-        calculatedSeason.value = "Autumn";
-        calculatedSeason.refresh();
-      } else {
-        // Before September Equinox Day: Summer.
-        calculatedSeason.value = "Summer";
-        calculatedSeason.refresh();
+      switch (selectedDateTime.value.month) {
+        case AppConstants.autumnSeptemberEquinoxMonth:
+          if (selectedDateTime.value.day >= AppConstants.autumnSeptemberEquinoxDay) {
+            // After or Equal September Equinox Day: Autumn.
+            calculatedSeason.value = "Autumn";
+            calculatedSeason.refresh();
+          } else {
+            // Before September Equinox Day: Summer.
+            calculatedSeason.value = "Summer";
+            calculatedSeason.refresh();
+          }
+          break;
+        case AppConstants.winterDecemberSolsticeMonth:
+          if (selectedDateTime.value.day < AppConstants.winterDecemberSolsticeDay) {
+            // Before December Solstice Day: Autumn.
+            calculatedSeason.value = "Autumn";
+            calculatedSeason.refresh();
+          } else {
+            // After or Equal December Solstice Day: Winter.
+            calculatedSeason.value = "Winter";
+            calculatedSeason.refresh();
+          }
+          break;
+        default:
+          calculatedSeason.value = "Autumn";
+          calculatedSeason.refresh();
+          break;
       }
     } else if (selectedDateTime.value.month >= AppConstants.winterDecemberSolsticeMonth && selectedDateTime.value.month <= AppConstants.springMarchEquinoxMonth) {
-      log("4");
-      if (selectedDateTime.value.day >= AppConstants.winterDecemberSolsticeDay) {
-        // After or Equal December Solstice Day: Winter.
-        calculatedSeason.value = "Winter";
-        calculatedSeason.refresh();
-      } else {
-        // Before December Equinox Day: Autumn.
-        calculatedSeason.value = "Autumn";
-        calculatedSeason.refresh();
+      switch (selectedDateTime.value.month) {
+        case AppConstants.winterDecemberSolsticeMonth:
+          if (selectedDateTime.value.day >= AppConstants.winterDecemberSolsticeDay) {
+            // After or Equal December Solstice Day: Winter.
+            calculatedSeason.value = "Winter";
+            calculatedSeason.refresh();
+          } else {
+            // Before December Solstice Day: Autumn.
+            calculatedSeason.value = "Autumn";
+            calculatedSeason.refresh();
+          }
+          break;
+        case AppConstants.springMarchEquinoxMonth:
+          if (selectedDateTime.value.day < AppConstants.springMarchEquinoxDay) {
+            // Before March Equinox Day: Winter.
+            calculatedSeason.value = "Winter";
+            calculatedSeason.refresh();
+          } else {
+            // After or Equal March Equinox Day: Spring.
+            calculatedSeason.value = "Spring";
+            calculatedSeason.refresh();
+          }
+          break;
+        default:
+          calculatedSeason.value = "Winter";
+          calculatedSeason.refresh();
+          break;
       }
+    } else {
+      // Month is January or February.
+      calculatedSeason.value = "Winter";
+      calculatedSeason.refresh();
     }
   }
 
@@ -109,6 +167,7 @@ class SeasonCheckerScreenController extends GetxController {
         textEditingControllerSelectedDateTime.text = AppGlobalFunction.dateTimeInString(dateTime: selectedDateTime.value, format: DateFormat("dd/MM/yyyy"),);
         selectedDateTime.refresh();
         calculateSeasonBySelectedDateTime();
+        log("Season: ${calculatedSeason.value}");
       },
       currentTime: selectedDateTime.value,
       theme: DatePickerTheme(
